@@ -13,12 +13,11 @@ target_link_libraries(my_library_executable my_library)
 
 install(
     TARGETS ${PROJECT_NAME} 
-    DESTINATION lib/${PROJECT_NAME}
+    DESTINATION lib
 )
 
 file(GLOB HEADERS include/*.h)
 
-install(
-    FILES ${HEADERS} 
-    DESTINATION include/${PROJECT_NAME}
+install(DIRECTORY  include/${PROJECT_NAME}
+  DESTINATION include
 )
