@@ -1,0 +1,7 @@
+<library path="lib/libmy_nodelet">
+    <class name="my_nodelet/MyNodelet" type="my_nodelet::MyNodelet" base_class_type="nodelet::Nodelet">
+        <description>
+            Hello World Nodelet
+        </description>
+    </class>
+</library>
