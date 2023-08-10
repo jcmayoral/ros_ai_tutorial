@@ -8,8 +8,10 @@ include_directories(
 
 add_library(my_library SHARED src/my_class.cpp)
 add_executable(my_library_executable src/my_class_executable.cpp)
+add_executable(pointers_executable src/pointers.cpp)
 
 target_link_libraries(my_library_executable my_library)
+target_link_libraries(pointers_executable my_library)
 
 install(
     TARGETS ${PROJECT_NAME} 
