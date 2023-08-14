@@ -4,7 +4,7 @@
 
 class Server{
     public:
-    Server(): nh("~"){
+    Server(): nh("/"){
         service = nh.advertiseService("test_service", &Server::execute_service, this);
     }
 

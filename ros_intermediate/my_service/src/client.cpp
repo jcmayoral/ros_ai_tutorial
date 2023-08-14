@@ -11,7 +11,7 @@ int main(int argc, char **argv)
     return 1;
   }
 
-  ros::NodeHandle n;
+  ros::NodeHandle n("/");
   ros::ServiceClient client = n.serviceClient<my_service::service>("test_service");
   my_service::service srv;
   srv.request.A = atoll(argv[1]);
