@@ -1,6 +1,7 @@
 #include <class_publisher_subscriber/main_class.h>
 
 MainClass::MainClass(): nh_("~"){
+	//subscribe (topicname, queue, callback)
 	main_subscriber_ = nh_.subscribe("main_topic", 1, &MainClass::main_cb,this);
 	output_publisher_ = nh_.advertise<std_msgs::String>("node_output", 1);
 	ros::spin();

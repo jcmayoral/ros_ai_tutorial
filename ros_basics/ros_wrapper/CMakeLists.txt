@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.2.0)
 project(ros_wrapper)
 
 add_compile_options(-std=c++11)
@@ -8,7 +8,7 @@ find_package(catkin REQUIRED
         roscpp
 )
 
-find_library(my_library REQUIRED)
+find_library(my_library REQUIRED PATHS /usr/local/)
 
 include_directories(include
   ${catkin_INCLUDE_DIRS}

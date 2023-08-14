@@ -3,5 +3,6 @@
 int main (int argc, char** argv){
     std::cout << "running executable" << std::endl;
     MyClass class_object;
+    class_object.function1();
     return 0;
 }
