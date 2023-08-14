@@ -1,6 +1,10 @@
 #include <ros/ros.h>
 #include <my_service/service.h>
 
+//Modificar esta clase para subscribirse a un topico de un entero int
+//Guardar el valor como modificador
+//El server devuelva (A+B) * modificador
+
 
 class Server{
     public:
@@ -11,7 +15,7 @@ class Server{
     bool execute_service(my_service::service::Request &req,
                     my_service::service::Response &resp)
     {
-        resp.C = req.A + req.B;
+        resp.C = (req.A + req.B) * modificador;
         ROS_INFO_STREAM("RESULT "<< resp.C);
         return true;
     }
