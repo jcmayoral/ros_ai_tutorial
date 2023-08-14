@@ -32,6 +32,10 @@ add_executable(client src/client.cpp)
 target_link_libraries(client ${catkin_LIBRARIES})
 add_dependencies(client ${PROJECT_NAME}_generate_messages_cpp )
 
+add_executable(server2 src/server2.cpp)
+target_link_libraries(server2 ${catkin_LIBRARIES})
+add_dependencies(server2 ${PROJECT_NAME}_generate_messages_cpp )
+
 catkin_package(
   #INCLUDE_DIRS include/${PROJECT_NAME}
   LIBRARIES ${PROJECT_NAME}
