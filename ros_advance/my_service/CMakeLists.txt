@@ -10,6 +10,23 @@ find_package(catkin REQUIRED
         message_generation
 )
 
+include_directories(
+  ${catkin_INCLUDE_DIRS}
+)
+
+add_service_files(
+  FILES
+  service.srv
+)
+
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
+
+add_executable(server src/server.cpp)
+target_link_libraries(server ${catkin_LIBRARIES})
+add_dependencies( server ${PROJECT_NAME}_generate_messages_cpp )
 
 catkin_package(
   #INCLUDE_DIRS include/${PROJECT_NAME}
@@ -17,11 +34,6 @@ catkin_package(
   CATKIN_DEPENDS
     roscpp
     std_msgs
-)
-
-add_service_files(
-  FILES
-  service.srv
 )
 
 install(DIRECTORY cfg
