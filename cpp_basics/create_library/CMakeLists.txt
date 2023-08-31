@@ -15,7 +15,9 @@ target_link_libraries(pointers_executable my_library)
 
 install(
     TARGETS ${PROJECT_NAME} 
-    DESTINATION lib
+    RUNTIME DESTINATION BIB
+    ARCHIVE DESTINATION lib
+    LIBRARY DESTINATION lib
 )
 
 file(GLOB HEADERS include/*.h)
