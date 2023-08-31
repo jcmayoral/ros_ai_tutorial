@@ -8,7 +8,6 @@ find_package(catkin REQUIRED
         roscpp
 )
 
-find_library(my_library REQUIRED PATHS /usr/local/)
 
 include_directories(include
   ${catkin_INCLUDE_DIRS}

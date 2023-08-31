@@ -1,4 +1,4 @@
-#include <cpp_ros_wrapper/ros_wrapper.h>
+#include <ros_wrapper/ros_wrapper.h>
 
 ROSWrapper::ROSWrapper(): my_class_(){
     ROS_INFO("ROS Constructor");
