@@ -1,0 +1,6 @@
+
+
+class ICP_SERVER{
+	ICP_SERVER();
+	~ICP_SERVER();
+};

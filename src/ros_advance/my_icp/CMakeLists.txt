@@ -10,8 +10,12 @@ find_package(catkin REQUIRED
         message_generation
 )
 
+find_package(PCL REQUIRED)
+
 include_directories(
+  include
   ${catkin_INCLUDE_DIRS}
+  ${PCL_INCLUDE_DIRS}
 )
 
 add_service_files(
@@ -24,9 +28,12 @@ generate_messages(
   std_msgs
 )
 
-add_executable(${PROJECT_NAME}_node src/server.cpp)
-target_link_libraries(${PROJECT_NAME}_node ${catkin_LIBRARIES})
-add_dependencies(${PROJECT_NAME}_node ${PROJECT_NAME}_generate_messages_cpp )
+add_library(${PROJECT_NAME} src/icp_server.cpp)
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+
+add_executable(${PROJECT_NAME}_server src/server.cpp)
+target_link_libraries(${PROJECT_NAME}_server ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+add_dependencies(${PROJECT_NAME}_server ${PROJECT_NAME}_generate_messages_cpp )
 
 add_executable(${PROJECT_NAME}_client src/client.cpp)
 target_link_libraries(${PROJECT_NAME}_client ${catkin_LIBRARIES})
