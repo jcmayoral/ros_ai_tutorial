@@ -7,6 +7,9 @@ find_package(catkin REQUIRED
         COMPONENTS
         roscpp
         std_msgs
+        sensor_msgs
+        pcl_conversions
+        pcl_ros
         message_generation
 )
 
@@ -41,11 +44,14 @@ add_dependencies(${PROJECT_NAME}_client ${PROJECT_NAME}_generate_messages_cpp )
 
 
 catkin_package(
-  #INCLUDE_DIRS include/${PROJECT_NAME}
+  INCLUDE_DIRS include/${PROJECT_NAME}
   LIBRARIES ${PROJECT_NAME}
   CATKIN_DEPENDS
     roscpp
     std_msgs
+    sensor_msgs
+    pcl_conversions
+    pcl_ros
 )
 
 install(DIRECTORY cfg
