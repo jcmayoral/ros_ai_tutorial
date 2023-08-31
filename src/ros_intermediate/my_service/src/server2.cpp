@@ -9,7 +9,7 @@
 class Server{
     public:
     Server(): nh("/"), modificador{1.0}{
-        nh.subscribe("modificador", 10, &Server::sub_cb, this);
+        sub_ = nh.subscribe("modificador", 10, &Server::sub_cb, this);
         service = nh.advertiseService("test_service",&Server::execute_service, this);
     }
 
@@ -31,6 +31,7 @@ class Server{
     private:
     ros::NodeHandle nh;
     ros::ServiceServer service;
+    ros::Subscriber sub_;
 };
 
 
@@ -39,4 +40,5 @@ int main(int argc, char** argv){
     Server server;
     ROS_INFO("Ready to call service.");
     ros::spin();
+    return 0;
 }
