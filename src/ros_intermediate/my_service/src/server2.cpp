@@ -1,6 +1,6 @@
 #include <ros/ros.h>
 #include <my_service/service.h>
-
+#include <std_msgs/Float32.h>
 //Modificar esta clase para subscribirse a un topico de un entero int
 //Guardar el valor como modificador
 //El server devuelva (A+B) * modificador
@@ -8,8 +8,9 @@
 
 class Server{
     public:
-    Server(): nh("/"){
-        service = nh.advertiseService("test_service", &Server::execute_service, this);
+    Server(): nh("/"), modificador{1.0}{
+        nh.subscribe("modificador", 10, &Server::sub_cb, this);
+        service = nh.advertiseService("test_service",&Server::execute_service, this);
     }
 
     bool execute_service(my_service::service::Request &req,
@@ -19,6 +20,13 @@ class Server{
         ROS_INFO_STREAM("RESULT "<< resp.C);
         return true;
     }
+
+    void sub_cb (const std_msgs::Float32::ConstPtr msg){
+        ROS_INFO_STREAM(msg->data);
+        modificador = msg->data;
+    }
+
+    float modificador;
 
     private:
     ros::NodeHandle nh;
