@@ -10,7 +10,9 @@ class ICP_SERVER{
 	public:
 		ICP_SERVER();
 		~ICP_SERVER();
-		void cloud_cb(const sensor_msgs::PointCloud2& cloud);
+		void cloud_cb(const sensor_msgs::PointCloud2::ConstPtr cloud);
 	private:
+		ros::Subscriber pc_sub_;
 		ros::NodeHandle nh_;
+		pcl::PointCloud<pcl::PointXYZI>::Ptr last_pc_;
 };

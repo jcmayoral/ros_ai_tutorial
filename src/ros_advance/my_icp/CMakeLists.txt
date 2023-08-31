@@ -9,7 +9,7 @@ find_package(catkin REQUIRED
         std_msgs
         sensor_msgs
         pcl_conversions
-        pcl_ros
+        #pcl_ros
         message_generation
 )
 
@@ -43,6 +43,11 @@ target_link_libraries(${PROJECT_NAME}_client ${catkin_LIBRARIES})
 add_dependencies(${PROJECT_NAME}_client ${PROJECT_NAME}_generate_messages_cpp )
 
 
+#This will replace client
+add_executable(${PROJECT_NAME}_node src/icp_node.cpp)
+target_link_libraries(${PROJECT_NAME}_node ${catkin_LIBRARIES} ${PROJECT_NAME})
+add_dependencies(${PROJECT_NAME}_node ${PROJECT_NAME}_generate_messages_cpp )
+
 catkin_package(
   INCLUDE_DIRS include/${PROJECT_NAME}
   LIBRARIES ${PROJECT_NAME}
@@ -51,7 +56,7 @@ catkin_package(
     std_msgs
     sensor_msgs
     pcl_conversions
-    pcl_ros
+    #pcl_ros
 )
 
 install(DIRECTORY cfg
