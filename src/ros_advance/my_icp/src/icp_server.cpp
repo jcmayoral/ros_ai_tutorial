@@ -11,19 +11,28 @@ ICP_SERVER::~ICP_SERVER(){
 
 void ICP_SERVER::cloud_cb(const sensor_msgs::PointCloud2::ConstPtr cloud_msg){
 
-	pcl::PointCloud<pcl::PointXYZI>::Ptr input_cloud(new pcl::PointCloud<pcl::PointXYZI>);
+	PC_POINTER input_cloud(new PC);
 	pcl::fromROSMsg(*cloud_msg, *input_cloud);
 
-	pcl::PointCloud<pcl::PointXYZI>::Ptr output_cloud(new pcl::PointCloud<pcl::PointXYZI>);
-	pcl::IterativeClosestPoint<pcl::PointXYZI, pcl::PointXYZI> icp;
+	queue_.push(input_cloud);
+	ROS_INFO_STREAM(queue_.size());
 
+	if (queue_.size() < 2){
+		return;
+	}
+
+	PC_POINTER output_cloud(new PC);
+	output_cloud = std::move(queue_.front());
+
+	//REMOVE FIRST ELEMENT
+	queue_.pop();
+
+	pcl::IterativeClosestPoint<pcl::PointXYZI, pcl::PointXYZI> icp;
 	icp.setMaximumIterations(100);
-	//icp.setInputSource(input_cloud);
-	icp.setInputCloud(input_cloud);
-	//icp.setInputTarget(output_cloud);
-	
-	icp.setInputTarget(last_pc_);
-	
+	icp.setInputSource(input_cloud);
+	//icp.setInputCloud(input_cloud);
+	icp.setInputTarget(output_cloud);
+
 	icp.setMaximumIterations (500);
 	icp.setTransformationEpsilon (1e-9);
 	icp.setMaxCorrespondenceDistance (0.05);
@@ -31,7 +40,7 @@ void ICP_SERVER::cloud_cb(const sensor_msgs::PointCloud2::ConstPtr cloud_msg){
 	icp.setRANSACOutlierRejectionThreshold (1.5);
 
 
-	pcl::PointCloud<pcl::PointXYZI>::Ptr finalCloud;
+	pcl::PointCloud<pcl::PointXYZI>::Ptr finalCloud(new pcl::PointCloud<pcl::PointXYZI>);
 	icp.align(*finalCloud);
 
 	if (icp.hasConverged()){
@@ -43,6 +52,4 @@ void ICP_SERVER::cloud_cb(const sensor_msgs::PointCloud2::ConstPtr cloud_msg){
 	else {
 		std::cout << "ICP did not converge." << std::endl;
 	}
-
-	last_pc_ = finalCloud;
 }

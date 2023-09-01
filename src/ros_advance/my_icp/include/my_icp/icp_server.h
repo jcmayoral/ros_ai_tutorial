@@ -1,3 +1,4 @@
+#include<queue>
 #include<ros/ros.h>
 #include <pcl/point_cloud.h>
 #include <pcl/point_types.h>
@@ -5,6 +6,10 @@
 #include <pcl/registration/icp.h>
 
 #include <sensor_msgs/PointCloud2.h>
+
+
+typedef pcl::PointCloud<pcl::PointXYZI> PC;
+typedef pcl::PointCloud<pcl::PointXYZI>::Ptr PC_POINTER;
 
 class ICP_SERVER{
 	public:
@@ -14,5 +19,5 @@ class ICP_SERVER{
 	private:
 		ros::Subscriber pc_sub_;
 		ros::NodeHandle nh_;
-		pcl::PointCloud<pcl::PointXYZI>::Ptr last_pc_;
+		std::queue<PC_POINTER> queue_;
 };
