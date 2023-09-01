@@ -3,10 +3,26 @@
 ICP_SERVER::ICP_SERVER(): nh_("~"){
 	ROS_INFO("ICP Server Constructor");	
 	pc_sub_ = nh_.subscribe("/velodyne_points", 1, &ICP_SERVER::cloud_cb, this);
+	timer_ = nh_.createTimer(ros::Duration(0.1), &ICP_SERVER::timer_callback, this);
 }
 
 ICP_SERVER::~ICP_SERVER(){
 	
+}
+
+void ICP_SERVER::timer_callback(const ros::TimerEvent&){
+	boost::mutex::scoped_lock lock(mtx_);
+	//For BroadCast
+	tf::Vector3 v(1.0, 2.0, 0.0);	
+	tf::Quaternion q;
+	q.setRPY(0, 0, 0.5);
+	broadcast_transform(v,q);
+}
+
+void ICP_SERVER::broadcast_transform(tf::Vector3 v, tf::Quaternion q){
+	transform_.setOrigin(v);
+	transform_.setRotation(q);
+	broadcaster_.sendTransform(tf::StampedTransform(transform_, ros::Time::now(), "world", "t"));
 }
 
 void ICP_SERVER::cloud_cb(const sensor_msgs::PointCloud2::ConstPtr cloud_msg){
@@ -52,4 +68,5 @@ void ICP_SERVER::cloud_cb(const sensor_msgs::PointCloud2::ConstPtr cloud_msg){
 	else {
 		std::cout << "ICP did not converge." << std::endl;
 	}
+
 }

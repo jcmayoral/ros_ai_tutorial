@@ -5,6 +5,7 @@ add_compile_options(-std=c++11)
 
 find_package(catkin REQUIRED
         COMPONENTS
+        tf
         roscpp
         std_msgs
         sensor_msgs
@@ -52,6 +53,7 @@ catkin_package(
   INCLUDE_DIRS include/${PROJECT_NAME}
   LIBRARIES ${PROJECT_NAME}
   CATKIN_DEPENDS
+    tf
     roscpp
     std_msgs
     sensor_msgs
